@@ -1,8 +1,7 @@
 {
   "name": "expense-tracker",
-  "version": "1.0.0",
-  "description": "App for tracking the expenses",
-  "main": "index.js",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
     "deploy": "gh-pages -d dist",
     "start": "set NODE_ENV=development&&webpack serve",
@@ -10,8 +9,6 @@
     "build-prod": "set NODE_ENV=production&&webpack",
     "clean": "rd /s /q dist"
   },
-  "author": "Sultanova Anahit",
-  "license": "ISC",
   "devDependencies": {
     "@babel/core": "latest",
     "@babel/polyfill": "latest",
@@ -41,6 +38,25 @@
     "style-loader": "latest",
     "webpack": "latest",
     "webpack-cli": "latest",
-    "webpack-dev-server": "latest"
+    "webpack-dev-server": "latest",
+    "react-router-dom": "^6.20.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
