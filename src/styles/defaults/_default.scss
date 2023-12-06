@@ -1,0 +1,45 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+ul, li {
+    list-style: none;
+    list-style-position: inside;
+}
+
+body {
+    overflow-x: hidden;
+    box-sizing: border-box;
+
+    font-family: 'Roboto', sans-serif;
+    font-size: $default-font-size;
+    font-weight: 400;
+}
+
+#root {
+    @include displayFlex(column, nowrap, center, space-between, center);
+    width: 100vw;
+    height: 100vh;
+    padding: 0.5em 0;
+}
+
+.container {
+    border: 1px solid $color-gray-light;
+    box-shadow: 2px 2px 15px $color-gray-light;
+    width: $container;
+    min-width: 320px;
+    position: relative;
+    padding: 2em 1em;
+    border-radius: 12px;
+    z-index: 2;
+}
+
+.container-inner {
+    box-shadow: 0 0 35px $color-gray-light;
+    border-radius: 12px;
+}
+

@@ -1,0 +1,14 @@
+@import './defaults/variables';
+@import './defaults/mixins';
+@import './defaults/typography';
+@import './defaults/default';
+@import './defaults/animations';
+
+
+@import './pages/Home.scss';
+
+
+@import './components/forms.scss';
+@import './components/header.scss';
+@import './components/footer.scss';
+@import './components/navigation.scss';

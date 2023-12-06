@@ -1,0 +1,31 @@
+footer {
+    .footer-section {
+        @include displayFlex(row, nowrap, center,  space-between, center);
+        padding: 2em 1em;
+        border-radius: 12px;
+
+        .logo {
+            a {
+                @include slide_to(moveInBottom);
+                font-family: "Dancing Script", cursive;
+                text-decoration: none;
+                font-weight: 800;
+                font-size: 1.5em;
+                color: $main-color;
+    
+                span {
+                    color: $color-orange;
+                }
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+        }
+
+        .copyright {
+            font-weight: 500;
+            font-size: 1em;
+            color: $main-color;
+        }
+    }
+}

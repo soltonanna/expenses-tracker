@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&family=Roboto:wght@300;400;500;700&family=Vast+Shadow&display=swap');
+
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap");
+
+/*
+font-family: 'Bruno Ace SC', sans-serif;
+
+font-family: 'Roboto', sans-serif;
+
+font-family: 'Vast Shadow', serif;
+
+font-family: 'Dancing Script', cursive;
+
+font-family: 'Ubuntu', sans-serif;
+*/
+
+:root {
+    --h1-font-size: 64px;
+    --h2-font-size: 48px;
+    --h3-font-size: 28px;
+
+    --p-font-size: 18px;
+    --a-font-size: 16px;
+}
+
+@include respond(tab-port) {
+    :root {
+        --h1-font-size: 36px;
+        --h2-font-size: 32px;
+        --h3-font-size: 24px;
+    
+        --p-font-size: 16px;
+        --a-font-size: 15px;
+    }
+}
+
+@include respond(phone) { 
+    :root {
+        --h1-font-size: 36px;
+        --h2-font-size: 32px;
+        --h3-font-size: 24px;
+    
+        --p-font-size: 16px;
+        --a-font-size: 15px;
+    }
+}
+
+h1 {
+    font-family: 'Bruno Ace SC', sans-serif;
+    font-size: var(--h1-font-size);
+    line-height: 67px;
+    font-weight: 700;
+    font-style: normal;
+    color: $h1-color;
+}
+
+h2 {
+    font-family: 'Roboto', sans-serif;
+    font-size: var(--h2-font-size);
+    line-height: 48px;
+    font-weight: 700;
+    font-style: normal;
+    color: $h2-color;
+}
+
+
+h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: var(--h3-font-size);
+    line-height: 27px;
+    font-weight: 700;
+    font-style: normal;
+    color: $h3-color;
+}
+
+p, div, input, button, textarea, select {
+    font-family: 'Roboto', sans-serif;
+    font-size: var(--p-font-size);
+    line-height: 27px;
+    font-weight: 400;
+    font-style: normal;
+    color: $p-color;
+}
+
+a {
+    font-family: 'Roboto', sans-serif;
+    font-size: var(--a-font-size);
+    line-height: 27px;
+    font-weight: 400;
+    font-style: normal;
+    text-decoration: none;
+    color: $a-color;
+    cursor: pointer;
+
+    &:hover,
+    &:active,
+    &:focus {
+        text-decoration: underline;
+        color: $a-hover-color;
+    }
+}
+
+.btn {
+    font-family: 'Roboto', sans-serif;
+    font-size: var(--a-font-size);
+    line-height: 27px;
+    font-weight: 400;
+    font-style: normal;
+    text-decoration: none;
+    color: $a-color;
+    cursor: pointer;
+    border: none;
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: $a-hover-color;
+        outline: none;
+    }
+}

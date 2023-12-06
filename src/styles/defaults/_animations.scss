@@ -1,0 +1,65 @@
+@keyframes moveInLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(-10rem);
+    }
+  
+    80% {
+      transform: translateX(1rem);
+    }
+  
+    100% {
+      opacity: 1;
+      transform: translate(0);
+    }
+  }
+  
+  @keyframes moveInRight {
+    0% {
+      opacity: 0;
+      transform: translateX(10rem);
+    }
+  
+    80% {
+      transform: translateX(-1rem);
+    }
+  
+    100% {
+      opacity: 1;
+      transform: translate(0);
+    }
+  }
+  
+  @keyframes moveInBottom {
+    0% {
+      opacity: 0;
+      transform: translateY(3rem);
+    }
+  
+    100% {
+      opacity: 1;
+      transform: translate(0);
+    }
+  }
+  
+  @mixin animation_bottom_to_top() {
+    background-image: linear-gradient(
+      120deg,
+      transparent 0%,
+      transparent 50%,
+      rgba($main-color, 0.5) 50%
+    );
+    background-size: 220%;
+    transition: all 0.4s;
+  
+    &:hover {
+      background-position: 100%;
+    }
+  }
+  
+  @mixin slide_to($keyframe) {
+    animation-name: $keyframe;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+  }
+  
