@@ -1,33 +1,27 @@
-const { ok } = require('assert')
+import axiosInstance from '../utils/http-client.util';
 
 class ExpensesService {
-    constructor(axiosClient) {
-        ok(axiosClient.defaults.baseURL, "baseURL is not set!");
-        ok(axiosClient.defaults.headers.common?.Authorization, "AccessToken is not set!");
 
-        this.client = axiosClient;
-    }
-
-    async create(payload) {
-        const result = await this.client.post("/expenses", payload);
+    static async create(payload) {
+        const result = await axiosInstance.post("/expenses", payload);
         return result.data;
     }
 
-    async list ({ skip, limit }) {
+    static async list ({ skip, limit }) {
         const params = { skip, limit }
         
-        const result = await this.client.get('/expenses', { params });
+        const result = await axiosInstance.get('/expenses', { params });
 
         return result.data;
     }
 
-    async view (id) {
-        const result = await this.client.get(`/expenses/${id}`);
+    static async view (id) {
+        const result = await axiosInstance.get(`/expenses/${id}`);
         return result.data;
     }
 
-    async delete (id) {
-        const result = await this.client.delete(`/expenses/${id}`);
+    static async delete (id) {
+        const result = await axiosInstance.delete(`/expenses/${id}`);
         return result.data;
     }
 }

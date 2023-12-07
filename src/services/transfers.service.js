@@ -1,35 +1,29 @@
-const { ok } = require('assert')
+import axiosInstance from '../utils/http-client.util';
 
 class TransfersService {
-    constructor(axiosClient) {
-        ok(axiosClient.defaults.baseURL, "baseURL is not set!");
-        ok(axiosClient.defaults.headers.common?.Authorization, "AccessToken is not set!");
 
-        this.client = axiosClient;
-    }
-
-    async create(payload) {
-        const result = await this.client.post("/transfers", payload);
+    static async create(payload) {
+        const result = await axiosInstance.post("/transfers", payload);
         return result.data;
     }
 
-    async list (accountId, limit, skip) {
+    static async list (accountId, limit, skip) {
         const params = {
             accountId,
             limit,
             skip
         }
-        const result = await this.client.get('/transfers', { params });
+        const result = await axiosInstance.get('/transfers', { params });
         return result.data;
     }
 
-    async view (transferId) {
-        const result = await this.client.get(`/transfers/${transferId}`);
+    static async view (transferId) {
+        const result = await axiosInstance.get(`/transfers/${transferId}`);
         return result.data;
     }
 
-    async delete (transferId) {
-        const result = await this.client.delete(`/transfers/${transferId}`);
+    static async delete (transferId) {
+        const result = await axiosInstance.delete(`/transfers/${transferId}`);
         return result.data;
     }
 }

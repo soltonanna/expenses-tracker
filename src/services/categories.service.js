@@ -1,44 +1,37 @@
-const { ok } = require('assert')
+import axiosInstance from '../utils/http-client.util';
 
 class CategoriesService {
-    constructor(axiosClient) {
-        ok(axiosClient.defaults.baseURL, "baseURL is not set!");
-        ok(axiosClient.defaults.headers.common?.Authorization, "AccessToken is not set!");
-
-        this.client = axiosClient;
-    }
-
-    async create(payload) {
-        const result = await this.client.post("/categories", payload);
+    static async create(payload) {
+        const result = await axiosInstance.post("/categories", payload);
         return result.data;
     }
 
-    async update(id, update) {
-        const result = await this.client.post(`/categories/${id}`, update);
+    static async update(id, update) {
+        const result = await axiosInstance.post(`/categories/${id}`, update);
         return result.data;
     }
 
-    async list (limit, skip) {
+    static async list (limit, skip) {
         const params = {
             limit,
             skip
         }
-        const result = await this.client.get('/categories', { params });
+        const result = await axiosInstance.get('/categories', { params });
         return result.data;
     }
 
-    async listCategoryIcons () {
-        const result = await this.client.get('/categories/icons');
+    static async listCategoryIcons () {
+        const result = await axiosInstance.get('/categories/icons');
         return result.data;
     }
 
-    async view (id) {
-        const result = await this.client.get(`/categories/${id}`);
+    static async view (id) {
+        const result = await axiosInstance.get(`/categories/${id}`);
         return result.data;
     }
 
-    async delete (id) {
-        const result = await this.client.delete(`/categories/${id}`);
+    static async delete (id) {
+        const result = await axiosInstance.delete(`/categories/${id}`);
         return result.data;
     }
 }
