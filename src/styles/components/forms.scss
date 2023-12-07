@@ -1,6 +1,6 @@
-.form {
+form {
     /* Item block with multiple elements (label, input, icon, etc...)  */
-    &__item {
+    .form__item {
         @include displayFlex(row, nowrap, center, center, center);
         width: 100%;
         margin: 0 auto;
@@ -38,5 +38,9 @@
         &[type="date"]:invalid::-webkit-datetime-edit {
           color: $color-gray;
         }
+    }
+
+    button {
+        margin: 1.5rem 0;
     }
 }
