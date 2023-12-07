@@ -23,9 +23,9 @@ const Navigation = () => {
 
             <li>
                 <NavLink 
-                    to="/auth"
+                    to="/login"
                     className={ ( isActive ) => { isActive ? 'active' : undefined } }>
-                    Auth
+                    Login
                 </NavLink>
             </li>
         </ul>

@@ -1,28 +1,22 @@
 /* COLORS */
 $color-white: #ffffff;
 $color-black: #000000;
+$color-blue: #489afd;
+$color-pink: #e566a2;
+$color-orange: #ea9154;
+
 $color-gray: #858585;
 $color-gray-dark: #333333;
 $color-gray-light: #e7e0e0;
 
-$main-color: #3890b6;
-$color-orange: #ff9900; 
+$main-color: #1f2060;
 
-$h1-color: red;
-$h2-color: green;
-$h3-color: blue;
 
 $p-color: black;
-$a-color: pink;
-$a-hover-color: rgb(10, 160, 72);
 
+$a-color: #85236c;
+$a-hover-color: #af226e;
 
-$font-size-50: 4.2rem;      // 50px
-$font-size-25: 2.1rem;      // 25px
-$font-size-22: 2.2rem;      // 22px
-$font-size-20: 1.8rem;      // 20px
-$font-size-18: 1.7rem;      // 18px
-$default-font-size: 1.6rem; // 16px
+$default-font-size: 1.3rem; // 20px
 
-
-$container: 1440px;
+$container: 80vw;

@@ -18,15 +18,18 @@ const router = createBrowserRouter([
         children: [
             { index: true, element: <Homepage/> },
             { path: 'profile', element: <Profile/> },
-            { 
-                path: 'auth', 
-                element: <AuthRootRouter/>,
-                children: [
-                    { path: 'login', element: <Login /> },
-                    { path: 'signup', element: <SignUp /> },
-                    { path: 'forgot-password', element: <ForgotPass /> },
-                ]
-            }
+            { path: 'login', element: <Login/> },
+            { path: 'forgot-password', element: <ForgotPass /> },
+            { path: 'signup', element: <SignUp /> },
+            // { 
+            //     path: 'auth', 
+            //     element: <AuthRootRouter/>,
+            //     children: [
+            //         { path: 'login', element: <Login /> },
+            //         { path: 'signup', element: <SignUp /> },
+            //         { path: 'forgot-password', element: <ForgotPass /> },
+            //     ]
+            // }
         ]
     }
 ]);

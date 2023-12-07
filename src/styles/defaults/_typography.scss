@@ -53,7 +53,6 @@ h1 {
     line-height: 67px;
     font-weight: 700;
     font-style: normal;
-    color: $h1-color;
 }
 
 h2 {
@@ -62,7 +61,6 @@ h2 {
     line-height: 48px;
     font-weight: 700;
     font-style: normal;
-    color: $h2-color;
 }
 
 
@@ -72,7 +70,6 @@ h3 {
     line-height: 27px;
     font-weight: 700;
     font-style: normal;
-    color: $h3-color;
 }
 
 p, div, input, button, textarea, select {
@@ -104,19 +101,34 @@ a {
 
 .btn {
     font-family: 'Roboto', sans-serif;
-    font-size: var(--a-font-size);
-    line-height: 27px;
-    font-weight: 400;
-    font-style: normal;
+    @include fonts($color-white, var(--a-font-size), 500, 27px);
+    background-color: $main-color;
+    border: 1px solid $main-color;
+    transition: all 1s;
+    border-radius: 5px;
     text-decoration: none;
-    color: $a-color;
+    padding: 15px 20px;
     cursor: pointer;
-    border: none;
 
     &:hover,
     &:active,
     &:focus {
-        color: $a-hover-color;
+        background-color: $color-pink;
+        border: 1px solid $color-pink;
         outline: none;
+    }
+}
+
+.btn-mail {
+    @include fonts($color-white, 18px, 700, 1.9rem);
+    text-decoration: none;
+    transition: all 1s;
+
+    &:hover, 
+    &:active,
+    &:focus {
+        color: $main-color;
+        background-color: $color-white;
+        text-decoration: dashed;
     }
 }

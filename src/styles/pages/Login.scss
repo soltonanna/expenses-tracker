@@ -1,11 +1,38 @@
 .login-page {
-    @include displayFlex(column, nowrap, center, center, stretch);
-    background-color: rgba($color-white, 0.5);
-    margin-top: 80px;
-    width: 20vw;
+    @include displayFlex(row, nowrap, center, space-between, center);
+
+    @include respond(tab-port) {
+        @include displayFlex(column, nowrap, center, center, center);
+    }
+
+    &__back-image {
+      max-width: 700px;
+
+      @include respond(tab-land) {
+        max-width: 400px;
+      }
+      @include respond(tab-port) {
+        max-width: 70vw;
+      }
+      
+      img {
+        object-fit: contain;
+        width: 100%;
+        height: 100%;
+      }
+    }
   
-    #login-form {
-      font-size: $font-size-18;
+    &__form {
+      width: 30vw;
+      margin: 0 2rem 0 0; 
+
+      @include respond(tab-port) {
+        max-width: 70vw;
+      }
+
+      .btn {
+        margin-top: 1.5rem;
+      }
     }
   }
   

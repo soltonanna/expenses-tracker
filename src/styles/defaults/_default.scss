@@ -23,7 +23,7 @@ body {
 #root {
     @include displayFlex(column, nowrap, center, space-between, center);
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     padding: 0.5em 0;
 }
 
@@ -34,8 +34,17 @@ body {
     min-width: 320px;
     position: relative;
     padding: 2em 1em;
-    border-radius: 12px;
+    border-radius: 1em;
+    margin-bottom: 2em;
     z-index: 2;
+
+    @include respond(tab-land) {
+        width: 90vw;
+    }
+
+    @include respond(tab-port) {
+        width: 97vw;
+    }
 }
 
 .container-inner {
