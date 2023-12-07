@@ -1,5 +1,5 @@
 import React from 'react';
-import Navigation from './Navigation';
+import Navigation from './nav/Navigation';
 import Container from './Container';
 import { Link } from 'react-router-dom';
 

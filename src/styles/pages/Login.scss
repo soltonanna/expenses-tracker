@@ -1,0 +1,11 @@
+.login-page {
+    @include displayFlex(column, nowrap, center, center, stretch);
+    background-color: rgba($color-white, 0.5);
+    margin-top: 80px;
+    width: 20vw;
+  
+    #login-form {
+      font-size: $font-size-18;
+    }
+  }
+  

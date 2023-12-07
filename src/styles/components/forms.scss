@@ -1,0 +1,76 @@
+.form {
+    /* Item block with multiple elements (label, input, icon, etc...)  */
+    &__item {
+        @include displayFlex(row, nowrap, center, center, center);
+        width: 100%;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    label {
+        margin-bottom: 20px;
+        min-width: 140px;
+        text-align: left;
+    }
+
+    i {
+        position: absolute;
+        top: 17%;
+        left: 95%;
+        transform: translate(-50%, 0);
+        font-size: $default-font-size;
+        color: $color-gray;
+    }
+
+    input {
+        border-radius: 5px;
+        width: 100%;
+        padding: 15px 10px;
+        margin-bottom: 20px;
+        position: relative;
+        color: $color-black;
+        font-size: $default-font-size;
+        border: 1px solid $color-gray;
+    
+        &:focus {
+          outline: 1px solid $main-color;
+        }
+        &[type="date"]:invalid::-webkit-datetime-edit {
+          color: $color-gray;
+        }
+    }
+
+    .btn {
+        @include fonts($color-white, $font-size-18, 700, 1.9rem);
+        font-family: "Ubuntu", sans-serif;
+        border-radius: 2rem;
+        padding: 15px 20px;
+        margin: 15px 0 0;
+
+        background-color: $main-color;
+        border: 1px solid $main-color;
+        transition: all 1s;
+
+        &:hover, 
+        &:active,
+        &:focus {
+            color: $main-color;
+            background-color: $color-white;
+            border: 1px solid $main-color;
+        }
+    }
+    
+    .btn-mail {
+        @include fonts($color-white, $font-size-18, 700, 1.9rem);
+        text-decoration: none;
+        transition: all 1s;
+
+        &:hover, 
+        &:active,
+        &:focus {
+            color: $main-color;
+            background-color: $color-white;
+            text-decoration: dashed;
+        }
+    }
+}

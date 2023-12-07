@@ -1,24 +1,18 @@
-const { ok } = require('assert')
+import axiosInstance from '../utils/http-client.util';
 
 class AuthService {
-    constructor(axiosClient) {
-        ok(axiosClient.defaults.baseURL, "baseURL is not set!");
-
-        this.client = axiosClient;
-    }
-
-    async login(credentials) {
-        const result = await this.client.post("/auth/login", credentials);
+    static async login(credentials) {
+        const result = await axiosInstance.post("/auth/login", credentials);
         return result.data;
     }
 
-    async refresh(refreshToken) {
-        const result = await this.client.post("/auth/refresh", { refreshToken });
-        return result.data;
+    static async refresh(refreshToken) {
+        const result = await axiosInstance.post("/auth/refresh", { refreshToken });
+        return result.data; 
     }
 
-    async logout(email) {
-        const result = await this.client.post("/auth/logout", { email });
+    static async logout(email) {
+        const result = await axiosInstance.post("/auth/logout", { email });
         return result.data;
     }
 }

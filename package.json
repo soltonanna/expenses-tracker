@@ -30,6 +30,7 @@
     "react-dom": "latest",
     "react-icons": "latest",
     "react-loading": "latest",
+    "react-router-dom": "^6.20.1",
     "react-router-hash-link": "latest",
     "react-scroll": "^1.9.0",
     "react-tabs": "latest",
@@ -39,7 +40,11 @@
     "webpack": "latest",
     "webpack-cli": "latest",
     "webpack-dev-server": "latest",
-    "react-router-dom": "^6.20.1"
+    "axios": "latest",
+    "dayjs": "latest",
+    "@fortawesome/fontawesome-svg-core": "latest",
+    "@fortawesome/free-solid-svg-icons": "latest",
+    "@fortawesome/react-fontawesome": "latest"
   },
   "eslintConfig": {
     "extends": [

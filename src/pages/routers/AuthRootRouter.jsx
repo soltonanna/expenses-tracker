@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import AuthNavigation from '../../components/AuthNavigation';
+import AuthNavigation from '../../components/nav/AuthNavigation';
 
 const AuthRootRouter = () => {
   return (
