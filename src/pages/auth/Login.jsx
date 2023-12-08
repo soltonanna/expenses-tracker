@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Container from '../../components/Container';
 import { LoginPageBg } from '../../utils/media-files';
@@ -13,17 +13,20 @@ import Form from '../../components/form/Form';
 import ItemBlock from '../../components/form/ItemBlock';
 import Button from '../../components/form/Button';
 
+import AuthContext from '../../context/AuthContext';
+
 const Login = () => {
   
-  const [login, setLogin] = useState({ email: '', password: '' });
+  const [credentials, setCredentials] = useState({ password: '', username: '' });
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
+  const { loginCurrentUser } = useContext(AuthContext);
   
   /** States of form content */
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log("submit log in");
-    console.log("register = ", login);
+
+    loginCurrentUser(credentials);
   }
 
   /** Password's icon visibility */
@@ -48,20 +51,20 @@ const Login = () => {
             className = 'row'
             type =  'email'
             placeholder = '* E-Mail'
-            name = 'useremail'
-            value = { login.email }
+            name = 'username'
+            value = { credentials.username }
             required
-            onChange = { e => setLogin({...login, email: e.target.value}) }
+            onChange = { e => setCredentials({...credentials, username: e.target.value}) }
           />
 
           <ItemBlock 
             className = 'row'
             type = { passwordVisibility ? 'text' : 'password' } 
             placeholder = '* Password'
-            value = { login.password }
-            name = 'userpassword'
+            value = { credentials.password }
+            name = 'password'
             required
-            onChange = { e => setLogin({...login, password: e.target.value}) }
+            onChange = { e => setCredentials({...credentials, password: e.target.value}) }
             onIconClick = { togglePasswordVisibility }
             icon = { eye }
           />

@@ -14,8 +14,13 @@
     "@babel/polyfill": "latest",
     "@babel/preset-env": "latest",
     "@babel/preset-react": "latest",
+    "@fortawesome/fontawesome-svg-core": "latest",
+    "@fortawesome/free-solid-svg-icons": "latest",
+    "@fortawesome/react-fontawesome": "latest",
+    "axios": "latest",
     "babel-loader": "latest",
     "css-loader": "latest",
+    "dayjs": "latest",
     "gh-pages": "latest",
     "html-loader": "latest",
     "html-webpack-plugin": "latest",
@@ -39,17 +44,15 @@
     "style-loader": "latest",
     "webpack": "latest",
     "webpack-cli": "latest",
-    "webpack-dev-server": "latest",
-    "axios": "latest",
-    "dayjs": "latest",
-    "@fortawesome/fontawesome-svg-core": "latest",
-    "@fortawesome/free-solid-svg-icons": "latest",
-    "@fortawesome/react-fontawesome": "latest"
+    "webpack-dev-server": "latest"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
     ]
+  },
+  "dependencies": {
+    "jwt-decode": "^4.0.0"
   }
 }

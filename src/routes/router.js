@@ -2,7 +2,6 @@ import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 
 import RootRouter from "../pages/routers/RootRouter";
-import AuthRootRouter from "../pages/routers/AuthRootRouter";
 
 import Homepage from "../pages/Homepage";
 import Profile from "../pages/Profile";
@@ -21,15 +20,6 @@ const router = createBrowserRouter([
             { path: 'login', element: <Login/> },
             { path: 'forgot-password', element: <ForgotPass /> },
             { path: 'signup', element: <SignUp /> },
-            // { 
-            //     path: 'auth', 
-            //     element: <AuthRootRouter/>,
-            //     children: [
-            //         { path: 'login', element: <Login /> },
-            //         { path: 'signup', element: <SignUp /> },
-            //         { path: 'forgot-password', element: <ForgotPass /> },
-            //     ]
-            // }
         ]
     }
 ]);

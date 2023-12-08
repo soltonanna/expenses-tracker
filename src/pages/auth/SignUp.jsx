@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import Container from '../../components/Container';
 import { SignUpPageBg } from '../../utils/media-files';
 
@@ -13,16 +13,37 @@ import Form from '../../components/form/Form';
 import ItemBlock from '../../components/form/ItemBlock';
 import Button from '../../components/form/Button';
 
+/** API Services */
+import UsersService from '../../services/users.service';
+
 const SignUp = () => {
   
-  const [register, setRegister] = useState({ firstName: '', lastName: '', email: '', password: '' });
+  const [register, setRegister] = useState({ email: '', firstName: '', lastName: '',  password: '' });
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
+  const navigate = useNavigate();
+
   /** States of form content */
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log("submit sign up");
-    console.log("register = ", register);
+
+    if ( register.firstName.trim().length === 0 || register.lastName.trim().length === 0 || register.email.trim().length === 0 || register.password.trim().length === 0 )  { 
+      alert('Invalid input', 'Please fill the required files marked with * (non-empty values).');
+      return;
+    } else {
+
+      try {
+        const result = await UsersService.signup(register);
+        console.log("Signup result:", result);
+        // Reset fields
+        setRegister({ firstName: '', lastName: '', email: '', password: '' });
+
+        navigate('/login');
+
+      } catch (error) {
+        console.error("Error during sign up:", error.message);
+      }
+    }
   }
 
   /** Password's icon visibility */
@@ -44,6 +65,15 @@ const SignUp = () => {
         <Form onSubmit  =  { submitHandler }>
           <ItemBlock 
             className = 'row'
+            type =  'email'
+            placeholder = '* E-Mail'
+            value = { register.email }
+            required
+            onChange = { e => setRegister({...register, email: e.target.value}) }
+          />
+
+          <ItemBlock 
+            className = 'row'
             type =  'text'
             placeholder = '* First Name'
             value = { register.firstName }
@@ -60,14 +90,7 @@ const SignUp = () => {
             onChange = { e => setRegister({...register, lastName: e.target.value}) }
           />
 
-          <ItemBlock 
-            className = 'row'
-            type =  'email'
-            placeholder = '* E-Mail'
-            value = { register.email }
-            required
-            onChange = { e => setRegister({...register, email: e.target.value}) }
-          />
+          
 
           <ItemBlock 
             className = 'row'
