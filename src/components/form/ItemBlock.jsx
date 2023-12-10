@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ItemBlock = (props) => {
+const ItemBlock = React.forwardRef((props, ref) => {
     const classes =  props.className ? `form__item ${props.className}` : `form__item`;
     
     return (
@@ -11,25 +11,38 @@ const ItemBlock = (props) => {
                 </label>
                 )
             }
+            <span>
+                <input
+                    ref={ref}
+                    type={props.type}
+                    autoComplete={props.autoComplete}
+                    onChange={props.onChange}
+                    value={props.value}
+                    placeholder={props.placeholder}
+                    name={props.name}
+                    required={props.required}
+                    aria-invalid={props['aria-invalid']}
+                    aria-describedby={props['aria-describedby']}
+                    onFocus={props.onFocus}
+                    onBlur={props.onBlur}
+                />
+                { props.icon && ( 
+                    <i onClick = { props.onIconClick }>
+                        { props.icon }
+                    </i>
+                )
+                }
+            </span>
             
-            <input 
-                type = { props.type } 
-                id = { props.id } 
-                placeholder = { props.placeholder }
-                name = { props.name } 
-                value = { props.value } 
-                required = { props.required } 
-                onChange = { props.onChange } 
-            />
-
-            { props.icon && ( 
-                <i onClick = { props.onIconClick }>
-                    { props.icon }
-                </i>
-            )
-            }
+            { props.errorMessage && (
+                <p id={props.errorId} className={props.iconClassName}>
+                {props.iconContent}{props.errorMessage}
+              </p>
+            )}
+            
+            
         </div>
     )
-}
+});
 
 export default ItemBlock;

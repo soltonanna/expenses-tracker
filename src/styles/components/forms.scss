@@ -1,10 +1,18 @@
 form {
     /* Item block with multiple elements (label, input, icon, etc...)  */
     .form__item {
-        @include displayFlex(row, nowrap, center, center, center);
+        @include displayFlex(column, nowrap, center, center, center);
         width: 100%;
         margin: 0 auto;
         position: relative;
+        padding: 5px 0;
+        margin-bottom: 15px;
+
+        & > span{
+            position: relative;
+            width: 100%;
+            display: block;
+        }
     }
 
     label {
@@ -15,18 +23,17 @@ form {
 
     i {
         position: absolute;
-        top: 17%;
-        left: 95%;
+        top: 25%; left: 95%;
         transform: translate(-50%, 0);
         font-size: $default-font-size;
         color: $color-gray;
+        cursor:pointer;
     }
 
     input {
         border-radius: 5px;
         width: 100%;
         padding: 15px 10px;
-        margin-bottom: 20px;
         position: relative;
         color: $color-black;
         font-size: $default-font-size;
@@ -43,4 +50,50 @@ form {
     button {
         margin: 1.5rem 0;
     }
+
+    .instructions {
+        font-size: 0.85rem;
+        border-radius: 0.5rem;
+        background: $color-gray-dark;
+        color: #fff;
+        padding: 0.25rem 0.60rem;
+        position: relative;
+        bottom: -5px;
+        width: 100%;
+    }
+    
+    .instructions > svg {
+        margin-right: 0.25rem;
+    }
+    
+    .offscreen {
+        position: absolute;
+        left: -9999px;
+    }
+
+    .hide {
+        display: none;
+    }
+    
+    .valid {
+        color: $color-blue;
+        margin-left: 0.25rem;
+    }
+    
+    .invalid {
+        color: $a-color;
+        margin-left: 0.25rem;
+    }
+    
+    .errmsg {
+        color: $a-color;
+        font-weight: bold;
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .line {
+        display: inline-block;
+    }
+    
 }

@@ -38,5 +38,26 @@
         max-width: 70vw;
       }
     }
+
+    &__success {
+      width: 30vw;
+      margin: 0 2rem 0 0; 
+
+      h2 {
+        margin-bottom: 2rem;
+        color: $color-orange;
+      }
+      & > p {
+        margin-bottom: 1.5rem;
+
+        a {
+          font-size: var(--p-font-size);
+        }
+      }
+
+      @include respond(tab-port) {
+        max-width: 70vw;
+      }
+    }
   }
   

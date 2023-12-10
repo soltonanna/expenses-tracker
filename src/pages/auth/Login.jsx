@@ -1,12 +1,20 @@
-import React, { useState, useContext } from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
+
 import Container from '../../components/Container';
+
+/** Utils */
 import { LoginPageBg } from '../../utils/media-files';
+import { 
+  EMAIL_REGEX, 
+  EMAIL_ERROR_MESSAGE, 
+  PWD_REGEX, 
+  PWD_ERROR_MESSAGE,
+  SUBMIT_ERROR_MESSAGE } from '../../utils/regex';
 
 /** Fonts */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye } from '@fortawesome/free-solid-svg-icons';
-import { faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 /** Form Items */
 import Form from '../../components/form/Form';
@@ -16,25 +24,63 @@ import Button from '../../components/form/Button';
 import AuthContext from '../../context/AuthContext';
 
 const Login = () => {
-  
+  /** Use Context data */
+  const { loginCurrentUser, success } = useContext(AuthContext);
+
+  const userRef = useRef();
+  const errRef = useRef();
+
   const [credentials, setCredentials] = useState({ password: '', username: '' });
-  const [passwordVisibility, setPasswordVisibility] = useState(false);
 
-  const { loginCurrentUser } = useContext(AuthContext);
+  /** For REGEX */
+  const [validName, setValidName] = useState(false);
+  const [userFocus, setUserFocus] = useState(false);
+
+  const [validPwd, setValidPwd] = useState(false);
+  const [pwdFocus, setPwdFocus] = useState(false);
+
+  const [errMsg, setErrMsg] = useState('');
   
-  /** States of form content */
-  const submitHandler = (e) => {
-    e.preventDefault();
+  /** Icons visibility */
+  const [passwordVisibility, setPasswordVisibility] = useState(false);
+  
+  /** Set the user input on focus after component load */
+  useEffect(()=> {
+    userRef.current.focus();
+  }, []);
 
-    loginCurrentUser(credentials);
-  }
+  /** Check userName & Password validation */
+  useEffect(()=> {
+    setValidName(EMAIL_REGEX.test(credentials.username));
+  }, [credentials.username]);
+
+  useEffect(()=> {
+    setValidPwd(PWD_REGEX.test(credentials.password));
+  }, [credentials.password]);
+
+  useEffect(()=> {
+    setErrMsg('');
+  }, [credentials.username, credentials.password]);
+  
 
   /** Password's icon visibility */
   const togglePasswordVisibility = () => {
     setPasswordVisibility(!passwordVisibility);
   };
   const eye = <FontAwesomeIcon icon = { passwordVisibility ? faEyeSlash : faEye } />;
-  
+
+  /** States of form content */
+  const submitHandler = (e) => {
+    e.preventDefault();
+
+    if (!EMAIL_REGEX.test(credentials.username) || !PWD_REGEX.test(credentials.password)) {
+      setErrMsg(SUBMIT_ERROR_MESSAGE);
+      return;
+    }
+
+    loginCurrentUser(credentials);
+  }
+
   return (
     <Container className='login-page'>
 
@@ -42,44 +88,79 @@ const Login = () => {
         <img src={ LoginPageBg } alt='Login Page' />
       </div>
 
-      <div className='login-page__form'>
-        <h2>Login</h2>
-        <p>Sign in to your account to continue.</p>
-
-        <Form onSubmit = { submitHandler }>
-          <ItemBlock 
-            className = 'row'
-            type =  'email'
-            placeholder = '* E-Mail'
-            name = 'username'
-            value = { credentials.username }
-            required
-            onChange = { e => setCredentials({...credentials, username: e.target.value}) }
-          />
-
-          <ItemBlock 
-            className = 'row'
-            type = { passwordVisibility ? 'text' : 'password' } 
-            placeholder = '* Password'
-            value = { credentials.password }
-            name = 'password'
-            required
-            onChange = { e => setCredentials({...credentials, password: e.target.value}) }
-            onIconClick = { togglePasswordVisibility }
-            icon = { eye }
-          />
-
-          <div>
-            <Link to='/forgot-password'> Forgot your password? </Link>
-            <p>Not registered? <Link to='/signup'> Create account </Link></p>
+      <>
+      {
+        success ? (
+          <div className='login-page__success'>
+            <h2>Congratulations! 🎉</h2>
+            <p>Welcome back <b>{credentials.username}</b>!</p>
+            <p>You have successfully logged in to your account. Now you can explore and manage your <Link to='/profile'> profile </Link></p>
+            <p>Thank you for choosing 'Expenses Tracker' app!</p>
           </div>
-          
-          <Button type = 'submit' >Login</Button>
-        </Form>
-      </div>
-     
-      
+        ) : (
+          <div className='login-page__form'>
+                  <h2>Login</h2>
+                  <p>Sign in to your account to continue.</p>
 
+                  <p ref={errRef} className={ errMsg ? 'error-message' : 'offscreen'} aria-live='assertive'> 
+                    { errMsg } 
+                  </p>
+                  
+                  <Form onSubmit = { submitHandler }>
+                    <ItemBlock
+                      type='email'
+                      ref={userRef}
+                      autoComplete='off'
+                      onChange = { e => setCredentials({...credentials, username: e.target.value}) }
+                      value= { credentials.username }
+                      placeholder='* E-Mail'
+                      name='username'
+                      required
+                      className='row' 
+                      aria-invalid= { validName ? 'false' : 'true' }
+                      aria-describedby='uidnote'
+                      onFocus={() => setUserFocus(true)}
+                      onBlur={() => setUserFocus(false)}
+
+                      iconContent={<FontAwesomeIcon icon={faInfoCircle} />}
+                      iconClassName={userFocus && credentials.username && !validName ? 'instructions' : 'offscreen'}
+                      errorMessage={EMAIL_ERROR_MESSAGE}
+                      errorId='uidnote'
+                    />
+
+                    <ItemBlock 
+                      type = { passwordVisibility ? 'text' : 'password' }
+                      onChange = { e => setCredentials({...credentials, password: e.target.value}) }
+                      value = { credentials.password }
+                      placeholder = '* Password'
+                      name = 'password'
+                      required
+                      className = 'row'
+                      aria-invalid= { validPwd ? 'false' : 'true' }
+                      aria-describedby='pwdnote'
+                      onFocus={ () => setPwdFocus(true) }
+                      onBlur={ () => setPwdFocus(false) }
+                      onIconClick = { togglePasswordVisibility }
+                      icon = { eye }
+                      
+                      iconContent={<FontAwesomeIcon icon={faInfoCircle} />}
+                      iconClassName={ pwdFocus && !validPwd ? 'instructions' : 'offscreen' }
+                      errorMessage={PWD_ERROR_MESSAGE}
+                      errorId='pwdnote'
+                    />
+
+                    <div>
+                      <Link to='/forgot-password'> Forgot your password? </Link>
+                      <p>Not registered? <Link to='/signup'> Create account </Link></p>
+                    </div>
+
+                    <Button type='submit' disabled={ !validName || !validPwd ? true : false }>Login</Button>
+                  </Form>
+          </div>
+        )
+      }
+      
+      </>
     </Container>
   )
 }

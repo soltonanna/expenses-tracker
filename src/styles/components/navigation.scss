@@ -3,7 +3,7 @@ nav {
         @include displayFlex(row, nowrap, center, flex-start, center);
 
         li {
-            a {
+            a, span {
                 @include fonts($main-color, 18px, 700, 21px);
                 text-decoration: none;
                 padding: 8px 10px;

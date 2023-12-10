@@ -3,7 +3,12 @@ import { NavLink } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 
 const Navigation = () => {
-    let { user } = useContext(AuthContext);
+    let { user, logOutCurrentUser } = useContext(AuthContext);
+
+    const logoutHandler = (e) => {
+        e.preventDefault();
+        logOutCurrentUser(user.email);
+    }
 
     return (
         <nav>
@@ -25,15 +30,22 @@ const Navigation = () => {
                         </NavLink>
                     </li>
                 }
-                <li>
-                    <NavLink 
-                        to="/login"
-                        className={ ( isActive ) => { isActive ? 'active' : undefined } }>
-                        Login
-                    </NavLink>
-                </li>
+                { user ? (
+                    <li onClick ={ logoutHandler }> <span>Logout</span></li>
+                ) : (
+                    <li>
+                        <NavLink 
+                            to="/login"
+                            className={ ( isActive ) => { isActive ? 'active' : undefined } }>
+                            Login
+                        </NavLink>
+                    </li>
+                )
+                }
             </ul>
+            
         </nav>
+        
     )
 }
 
