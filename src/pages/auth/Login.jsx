@@ -10,7 +10,8 @@ import {
   EMAIL_ERROR_MESSAGE, 
   PWD_REGEX, 
   PWD_ERROR_MESSAGE,
-  SUBMIT_ERROR_MESSAGE } from '../../utils/regex';
+  SUBMIT_ERROR_MESSAGE 
+} from '../../utils/regex';
 
 /** Fonts */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,12 +22,10 @@ import Form from '../../components/form/Form';
 import ItemBlock from '../../components/form/ItemBlock';
 import Button from '../../components/form/Button';
 
+/** Use data from context */
 import AuthContext from '../../context/AuthContext';
 
 const Login = () => {
-  /** Use Context data */
-  const { loginCurrentUser, success } = useContext(AuthContext);
-
   const userRef = useRef();
   const errRef = useRef();
 
@@ -61,7 +60,6 @@ const Login = () => {
   useEffect(()=> {
     setErrMsg('');
   }, [credentials.username, credentials.password]);
-  
 
   /** Password's icon visibility */
   const togglePasswordVisibility = () => {
@@ -69,6 +67,9 @@ const Login = () => {
   };
   const eye = <FontAwesomeIcon icon = { passwordVisibility ? faEyeSlash : faEye } />;
 
+  /** Use Context data */
+  const { loginCurrentUser, success } = useContext(AuthContext);
+  
   /** States of form content */
   const submitHandler = (e) => {
     e.preventDefault();

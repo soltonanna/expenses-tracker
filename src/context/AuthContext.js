@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate} from 'react-router-dom';
-import AuthService from '../services/auth.service' 
+import AuthService from '../services/auth.service';
+import UsersService from "../services/users.service";
 import { jwtDecode } from "jwt-decode";
 
 const AuthContext = createContext();
@@ -29,6 +30,19 @@ export const AuthProvider = ({children}) => {
         logOutCurrentUser();
       }
     }, []);
+
+    const signInCurrentUser = async (credentials) => {
+      try {
+        const result = await UsersService.signup(credentials);
+        console.log("Signup result:", result);
+
+        // Use 'success' for show some data
+        setSuccess(true);
+
+      } catch (error) {
+        console.error("Error during sign up:", error.message);
+      }
+    }
 
     const loginCurrentUser = async (credentials) => {
         try {
@@ -86,6 +100,7 @@ export const AuthProvider = ({children}) => {
         success: success, 
         user: user,
         authTokens:authTokens,
+        signInCurrentUser: signInCurrentUser,
         loginCurrentUser: loginCurrentUser,
         logOutCurrentUser: logOutCurrentUser,
     }

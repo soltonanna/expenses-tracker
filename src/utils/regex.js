@@ -1,6 +1,6 @@
 // Regular expressions
-export const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
-export const USER_INSTRUCTIONS = "Username must start with a letter, be between 4 and 24 characters, and can only contain letters, numbers, hyphens, and underscores.";
+export const USER_REGEX = /^[A-Za-z][A-Za-z_-]{2,22}$/;
+export const USER_INSTRUCTIONS = "Username must start with a letter, be between 4 and 24 characters, and can only contain letters, hyphens, and underscores.";
 export const USER_ERROR_MESSAGE = "Invalid username. " + USER_INSTRUCTIONS;
 
 
