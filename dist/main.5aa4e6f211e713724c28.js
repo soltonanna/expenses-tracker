@@ -4788,18 +4788,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _routes_PrivateRoute__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./routes/PrivateRoute */ "./src/routes/PrivateRoute.js");
 /* harmony import */ var _context_AuthContext__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./context/AuthContext */ "./src/context/AuthContext.js");
-/* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Header */ "./src/components/Header.jsx");
-/* harmony import */ var _components_Footer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Footer */ "./src/components/Footer.jsx");
-/* harmony import */ var _pages_Homepage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/Homepage */ "./src/pages/Homepage.jsx");
-/* harmony import */ var _pages_auth_Login__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/auth/Login */ "./src/pages/auth/Login.jsx");
-/* harmony import */ var _pages_auth_SignUp__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/auth/SignUp */ "./src/pages/auth/SignUp.jsx");
-/* harmony import */ var _pages_auth_ForgotPass__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pages/auth/ForgotPass */ "./src/pages/auth/ForgotPass.jsx");
-/* harmony import */ var _pages_Profile__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/Profile */ "./src/pages/Profile.jsx");
-/* harmony import */ var _pages_NotFound__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./pages/NotFound */ "./src/pages/NotFound.jsx");
+/* harmony import */ var _utils_http_client_util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils/http-client.util */ "./src/utils/http-client.util.js");
+/* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Header */ "./src/components/Header.jsx");
+/* harmony import */ var _components_Footer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Footer */ "./src/components/Footer.jsx");
+/* harmony import */ var _pages_Homepage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/Homepage */ "./src/pages/Homepage.jsx");
+/* harmony import */ var _pages_auth_Login__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/auth/Login */ "./src/pages/auth/Login.jsx");
+/* harmony import */ var _pages_auth_SignUp__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pages/auth/SignUp */ "./src/pages/auth/SignUp.jsx");
+/* harmony import */ var _pages_auth_ForgotPass__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/auth/ForgotPass */ "./src/pages/auth/ForgotPass.jsx");
+/* harmony import */ var _pages_Profile__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./pages/Profile */ "./src/pages/Profile.jsx");
+/* harmony import */ var _pages_NotFound__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./pages/NotFound */ "./src/pages/NotFound.jsx");
+
 
 
 
@@ -4813,30 +4815,30 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function App() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.HashRouter, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_context_AuthContext__WEBPACK_IMPORTED_MODULE_2__.AuthProvider, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_Header__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Routes, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.HashRouter, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_context_AuthContext__WEBPACK_IMPORTED_MODULE_2__.AuthProvider, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_utils_http_client_util__WEBPACK_IMPORTED_MODULE_3__.AxiosInterceptor, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_Header__WEBPACK_IMPORTED_MODULE_4__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Routes, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
     path: "/",
     exact: true,
-    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_pages_Homepage__WEBPACK_IMPORTED_MODULE_5__["default"], null)
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_pages_Homepage__WEBPACK_IMPORTED_MODULE_6__["default"], null)
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
     path: "/login",
-    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_pages_auth_Login__WEBPACK_IMPORTED_MODULE_6__["default"], null)
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_pages_auth_Login__WEBPACK_IMPORTED_MODULE_7__["default"], null)
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
     path: "/signup",
-    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_pages_auth_SignUp__WEBPACK_IMPORTED_MODULE_7__["default"], null)
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_pages_auth_SignUp__WEBPACK_IMPORTED_MODULE_8__["default"], null)
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
     path: "/forgot-password",
-    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_pages_auth_ForgotPass__WEBPACK_IMPORTED_MODULE_8__["default"], null)
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_pages_auth_ForgotPass__WEBPACK_IMPORTED_MODULE_9__["default"], null)
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
     exact: true,
     path: "/",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_routes_PrivateRoute__WEBPACK_IMPORTED_MODULE_1__.PrivateRoute, null)
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
     path: "/profile",
-    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_pages_Profile__WEBPACK_IMPORTED_MODULE_9__["default"], null)
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_pages_Profile__WEBPACK_IMPORTED_MODULE_10__["default"], null)
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
     path: "*",
-    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_pages_NotFound__WEBPACK_IMPORTED_MODULE_10__["default"], null)
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_Footer__WEBPACK_IMPORTED_MODULE_4__["default"], null)));
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_pages_NotFound__WEBPACK_IMPORTED_MODULE_11__["default"], null)
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_Footer__WEBPACK_IMPORTED_MODULE_5__["default"], null)));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
 
@@ -4876,6 +4878,7 @@ const AuthProvider = _ref => {
   const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
   const [accessToken, setAccessToken] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
   const [refreshToken, setRefreshToken] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  let refreshSubscribers = [];
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -4887,23 +4890,12 @@ const AuthProvider = _ref => {
   }, []);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (userLogout) {
-      //logOutCurrentUser();
       setUserLogout(true);
     }
   }, [userLogout]);
-  const handleTokenExpiration = () => {
-    console.log("----handleTokenExpiration---");
-    setSuccessAuth(false);
-    setAccessToken(null);
-    setUser(null);
-    localStorage.removeItem('user');
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    navigate('/login');
-  };
 
   /** SignIn */
-  const signInCurrentUser = async credentials => {
+  const signInUser = async credentials => {
     try {
       const result = await _services_users_service__WEBPACK_IMPORTED_MODULE_2__["default"].signup(credentials);
       setSuccessAuth(true);
@@ -4913,7 +4905,7 @@ const AuthProvider = _ref => {
   };
 
   /** LogIn */
-  const loginCurrentUser = async credentials => {
+  const logInUser = async credentials => {
     try {
       const result = await _services_auth_service__WEBPACK_IMPORTED_MODULE_1__["default"].login(credentials);
       const {
@@ -4939,51 +4931,45 @@ const AuthProvider = _ref => {
   };
 
   /** LogOut */
-  const logOutCurrentUser = async email => {
+  const logOutUser = async email => {
     try {
-      const result = await _services_auth_service__WEBPACK_IMPORTED_MODULE_1__["default"].logout(email);
-
-      //setUserLogout(true);
+      await _services_auth_service__WEBPACK_IMPORTED_MODULE_1__["default"].logout(email);
       setSuccessAuth(false);
       setAccessToken(null);
       setUser(null);
       localStorage.removeItem('user');
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
-      navigate('/');
+      navigate('/#/login');
     } catch (error) {
-      //setSuccessAuth(true);
       console.error("ERROR: Error during logout:", error.message);
     }
   };
 
   /** Refresh Token */
-  const refreshTokens = async () => {
-    try {
-      const newTokens = await _services_auth_service__WEBPACK_IMPORTED_MODULE_1__["default"].refresh(refreshToken);
-      //localStorage.setItem("accessToken", JSON.stringify(newTokens));
-      localStorage.setItem("accessToken", newTokens.accessToken);
-      localStorage.setItem("refreshToken", newTokens.refreshToken);
-      setAccessToken(newTokens);
-      const decodedUser = (0,jwt_decode__WEBPACK_IMPORTED_MODULE_3__.jwtDecode)(newTokens.accessToken);
-      setUser(decodedUser);
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        console.log("Unauthorized access. Redirecting to login...");
-        handleTokenExpiration();
-      } else {
-        console.error("ERROR: Error during refreshing tokens:", error.message);
-      }
-    }
-  };
+  // const refreshTokens = async () => {
+  //   try {
+  //     const token = localStorage.getItem("refreshToken");
+  //     const response = await axiosInstance.post('/auth/refresh', { refreshToken: token });
+  //     const { refreshToken, accessToken } = response.data;
+
+  //     localStorage.setItem('accessToken', accessToken);
+  //     localStorage.setItem('refreshToken', refreshToken);
+
+  //     refreshSubscribers.forEach((callback) => callback(accessToken));
+  //     refreshSubscribers = [];
+  //   } catch (error) {
+  //     console.error('Failed to refresh token:', error);
+  //   }
+  // };
+
   const contextData = {
     user,
-    accessToken,
+    //refreshToken,
     successAuth,
-    refreshTokens,
-    signInCurrentUser,
-    loginCurrentUser,
-    logOutCurrentUser
+    signInUser,
+    logInUser,
+    logOutUser
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(AuthContext.Provider, {
     value: contextData
@@ -5036,17 +5022,17 @@ __webpack_require__.r(__webpack_exports__);
 
 class AuthService {
   static async login(credentials) {
-    const result = await _utils_http_client_util__WEBPACK_IMPORTED_MODULE_0__["default"].post("/auth/login", credentials);
+    const result = await _utils_http_client_util__WEBPACK_IMPORTED_MODULE_0__.axiosInstance.post("/auth/login", credentials);
     return result.data;
   }
   static async refresh(refreshToken) {
-    const result = await _utils_http_client_util__WEBPACK_IMPORTED_MODULE_0__["default"].post("/auth/refresh", {
+    const result = await _utils_http_client_util__WEBPACK_IMPORTED_MODULE_0__.axiosInstance.post("/auth/refresh", {
       refreshToken
     });
     return result.data;
   }
   static async logout(email) {
-    const result = await _utils_http_client_util__WEBPACK_IMPORTED_MODULE_0__["default"].post("/auth/logout", {
+    const result = await _utils_http_client_util__WEBPACK_IMPORTED_MODULE_0__.axiosInstance.post("/auth/logout", {
       email
     });
     return result.data;
@@ -5071,7 +5057,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class UsersService {
   static async signup(payload) {
-    const result = await _utils_http_client_util__WEBPACK_IMPORTED_MODULE_0__["default"].post("/users", payload);
+    const result = await _utils_http_client_util__WEBPACK_IMPORTED_MODULE_0__.axiosInstance.post("/users", payload);
     return result.data;
   }
   static async verify(email, expiresIn, key) {
@@ -5080,15 +5066,15 @@ class UsersService {
       expiresIn,
       key
     };
-    const result = await _utils_http_client_util__WEBPACK_IMPORTED_MODULE_0__["default"].post('/users/verify', payload);
+    const result = await _utils_http_client_util__WEBPACK_IMPORTED_MODULE_0__.axiosInstance.post('/users/verify', payload);
     return result.data;
   }
   static async me() {
-    const result = await _utils_http_client_util__WEBPACK_IMPORTED_MODULE_0__["default"].get('/users/me');
+    const result = await _utils_http_client_util__WEBPACK_IMPORTED_MODULE_0__.axiosInstance.get('/users/me');
     return result.data;
   }
   static async forgotPassword(email) {
-    const result = await _utils_http_client_util__WEBPACK_IMPORTED_MODULE_0__["default"].post("/users/forgot-password", {
+    const result = await _utils_http_client_util__WEBPACK_IMPORTED_MODULE_0__.axiosInstance.post("/users/forgot-password", {
       email
     });
     return result.data;
@@ -5100,7 +5086,7 @@ class UsersService {
       key,
       newPassword
     };
-    const result = await _utils_http_client_util__WEBPACK_IMPORTED_MODULE_0__["default"].post("/users/forgot-password", payload);
+    const result = await _utils_http_client_util__WEBPACK_IMPORTED_MODULE_0__.axiosInstance.post("/users/forgot-password", payload);
     return result.data;
   }
   static async updatePassword(oldPassword, newPassword) {
@@ -5108,11 +5094,11 @@ class UsersService {
       oldPassword,
       newPassword
     };
-    const result = await _utils_http_client_util__WEBPACK_IMPORTED_MODULE_0__["default"].patch("/users/update-password", payload);
+    const result = await _utils_http_client_util__WEBPACK_IMPORTED_MODULE_0__.axiosInstance.patch("/users/update-password", payload);
     return result.data;
   }
   static async update(update) {
-    const result = await _utils_http_client_util__WEBPACK_IMPORTED_MODULE_0__["default"].put("/users", update);
+    const result = await _utils_http_client_util__WEBPACK_IMPORTED_MODULE_0__.axiosInstance.put("/users", update);
     return result.data;
   }
 }
@@ -5165,50 +5151,92 @@ const HomepageContentInfo = [{
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   AxiosInterceptor: () => (/* binding */ AxiosInterceptor),
+/* harmony export */   axiosInstance: () => (/* binding */ axiosInstance)
 /* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
-/* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/auth.service */ "./src/services/auth.service.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _context_AuthContext__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../context/AuthContext */ "./src/context/AuthContext.js");
 
 
-const baseURL = 'http://localhost:8000/api/v1';
-const timeout = 5000;
-const axiosInstance = axios__WEBPACK_IMPORTED_MODULE_1__["default"].create({
-  baseURL,
-  timeout
+
+
+const axiosInstance = axios__WEBPACK_IMPORTED_MODULE_2__["default"].create({
+  baseURL: 'http://localhost:8000/api/v1',
+  timeout: 5000
 });
-axiosInstance.interceptors.request.use(config => {
-  const token = localStorage.getItem('accessToken');
-  if (token) {
-    config.headers['Authorization'] = `Bearer ${token}`;
-  }
-  return config;
-}, error => {
-  return Promise.reject(error);
-});
-axiosInstance.interceptors.response.use(response => response, async error => {
-  const originalRequest = error.config;
-  if (error.response && error.response.status === 401 && !originalRequest._retry) {
-    console.log('ERROR: Unauthorized access. Refreshing token...');
-    originalRequest._retry = true;
-    try {
-      const newTokens = await _services_auth_service__WEBPACK_IMPORTED_MODULE_0__["default"].refresh(localStorage.getItem('refreshToken'));
-      localStorage.setItem('accessToken', newTokens.accessToken);
-      localStorage.setItem('refreshToken', newTokens.refreshToken);
-      //const originalRequest = error.config;
-      //originalRequest.headers['Authorization'] = `Bearer ${newTokens.accessToken}`;
-
-      return (0,axios__WEBPACK_IMPORTED_MODULE_1__["default"])(originalRequest);
-    } catch (refreshError) {
-      console.log('ERROR: Error refreshing token:', refreshError.message);
-      // TODO: fix the logout functionality
-      await _services_auth_service__WEBPACK_IMPORTED_MODULE_0__["default"].logout(localStorage.getItem('user'));
-      return Promise.reject(refreshError);
+let isRefreshing = false;
+let refreshSubscribers = [];
+function refreshToken() {
+  const token = localStorage.getItem("refreshToken");
+  return axiosInstance.post('/auth/refresh', {
+    refreshToken: token
+  }).then(response => {
+    const {
+      refreshToken,
+      accessToken
+    } = response.data;
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('refreshToken', refreshToken);
+    refreshSubscribers.forEach(callback => callback(accessToken));
+    refreshSubscribers = [];
+  }).catch(error => {
+    console.error('Failed to refresh token:', error);
+  });
+}
+const AxiosInterceptor = () => {
+  const {
+    logOutUser
+  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_context_AuthContext__WEBPACK_IMPORTED_MODULE_1__["default"]);
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
+  axiosInstance.interceptors.request.use(config => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      config.headers['Authorization'] = `Bearer ${accessToken}`;
     }
-  }
-  return Promise.reject(error);
-});
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (axiosInstance);
+    return config;
+  }, error => {
+    return Promise.reject(error);
+  });
+  axiosInstance.interceptors.response.use(response => {
+    return response;
+  }, async error => {
+    const {
+      config,
+      response: {
+        status
+      }
+    } = error;
+    const originalRequest = config;
+    if (status === 401) {
+      if (!isRefreshing) {
+        isRefreshing = true;
+        return refreshToken().then(newAccessToken => {
+          isRefreshing = false;
+          originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+          return axiosInstance(originalRequest);
+        }).finally(() => {
+          isRefreshing = false;
+        });
+      } else {
+        if (config.url === '/auth/refresh' && isRefreshing) {
+          await logOutUser();
+          navigate('/#/login');
+        }
+        return new Promise(resolve => {
+          refreshSubscribers.push(newAccessToken => {
+            originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+            resolve(axiosInstance(originalRequest));
+          });
+        });
+      }
+    }
+    return Promise.reject(error);
+  });
+};
+
 
 /***/ }),
 
@@ -5479,11 +5507,11 @@ __webpack_require__.r(__webpack_exports__);
 const Navigation = () => {
   let {
     user,
-    logOutCurrentUser
+    logOutUser
   } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_context_AuthContext__WEBPACK_IMPORTED_MODULE_1__["default"]);
   const logoutHandler = e => {
     e.preventDefault();
-    logOutCurrentUser(user.email);
+    logOutUser(user.email);
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("nav", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.NavLink, {
     to: "/",
@@ -5720,7 +5748,7 @@ const Login = () => {
 
   /** Use Context data */
   const {
-    loginCurrentUser
+    logInUser
   } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_context_AuthContext__WEBPACK_IMPORTED_MODULE_8__["default"]);
 
   /** States of form content */
@@ -5730,7 +5758,7 @@ const Login = () => {
       setErrMsg(_utils_regex__WEBPACK_IMPORTED_MODULE_3__.SUBMIT_ERROR_MESSAGE);
       return;
     }
-    loginCurrentUser(credentials);
+    logInUser(credentials);
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_Container__WEBPACK_IMPORTED_MODULE_1__["default"], {
     className: "login-page"
@@ -5906,7 +5934,7 @@ const SignUp = () => {
 
   /** Use Context data */
   const {
-    signInCurrentUser,
+    signInUser,
     successAuth,
     user
   } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_context_AuthContext__WEBPACK_IMPORTED_MODULE_9__["default"]);
@@ -5918,7 +5946,7 @@ const SignUp = () => {
       setErrMsg(_utils_regex__WEBPACK_IMPORTED_MODULE_3__.SUBMIT_ERROR_MESSAGE);
       return;
     }
-    signInCurrentUser(credentials);
+    signInUser(credentials);
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_Container__WEBPACK_IMPORTED_MODULE_1__["default"], {
     className: "signup-page"
@@ -73359,4 +73387,4 @@ root.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createEle
 
 /******/ })()
 ;
-//# sourceMappingURL=main.fe8a96865d14c4f09feb.js.map
+//# sourceMappingURL=main.5aa4e6f211e713724c28.js.map

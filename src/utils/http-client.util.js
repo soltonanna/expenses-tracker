@@ -1,51 +1,94 @@
-import axios from 'axios';
-import AuthService from '../services/auth.service';
+import axios from 'axios'
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import AuthContext from '../context/AuthContext';
 
-const baseURL = 'http://localhost:8000/api/v1';
-const timeout = 5000;
+const axiosInstance = axios.create({
+    baseURL: 'http://localhost:8000/api/v1',
+    timeout: 5000
+});
 
-const axiosInstance = axios.create({ baseURL, timeout });
+let isRefreshing = false;
+let refreshSubscribers = [];
 
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('accessToken');
-    if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
+function refreshToken() {
+  const token = localStorage.getItem("refreshToken");
+  return axiosInstance.post('/auth/refresh', { refreshToken: token })
+    .then((response) => {
+      const { refreshToken, accessToken } = response.data;
+
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+
+      refreshSubscribers.forEach((callback) => callback(accessToken));
+      refreshSubscribers = [];
+    })
+    .catch((error) => {
+      console.error('Failed to refresh token:', error);
+    });
+}
+
+const AxiosInterceptor =  () => {
+  const { logOutUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  axiosInstance.interceptors.request.use(
+    (config) => {
+      const accessToken = localStorage.getItem("accessToken")
+
+      if (accessToken) {
+        config.headers['Authorization'] = `Bearer ${accessToken}`;
+      }
+
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
     }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+  );
 
-axiosInstance.interceptors.response.use(
-  response => response,
-  async (error) => {
-    const originalRequest = error.config;
+  axiosInstance.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    async (error) => {
+      const { config, response: { status } } = error;
+      const originalRequest = config;
 
-    if (error.response && error.response.status === 401 && !originalRequest._retry) {
-        console.log('ERROR: Unauthorized access. Refreshing token...');
-        originalRequest._retry = true;
-        
-        try {
-          const newTokens = await AuthService.refresh(localStorage.getItem('refreshToken'));
-          localStorage.setItem('accessToken', newTokens.accessToken);
-          localStorage.setItem('refreshToken', newTokens.refreshToken);
-          //const originalRequest = error.config;
-          //originalRequest.headers['Authorization'] = `Bearer ${newTokens.accessToken}`;
+      if (status === 401) {
+        if (!isRefreshing) {
 
-          return axios(originalRequest);
+          isRefreshing = true;
 
-        } catch (refreshError) {
-          console.log('ERROR: Error refreshing token:', refreshError.message);
-          // TODO: fix the logout functionality
-          await AuthService.logout(localStorage.getItem('user'));
-          return Promise.reject(refreshError);
+          return refreshToken()
+            .then((newAccessToken) => {
+              isRefreshing = false;
+
+              originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+
+              return axiosInstance(originalRequest);
+            })
+            .finally(() => {
+              isRefreshing = false;
+            });
+        } 
+        else {
+          if (config.url === '/auth/refresh' && isRefreshing) {
+            await logOutUser(localStorage.getItem("user"));
+            navigate('/login');
+          }
+          return new Promise((resolve) => {
+            refreshSubscribers.push((newAccessToken) => {
+              originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+              resolve(axiosInstance(originalRequest));
+            });
+          });
         }
-    }
-    return Promise.reject(error);
-  }
-);
+      }
 
-export default axiosInstance;
+      return Promise.reject(error);
+    }
+  );
+}
+
+export { axiosInstance, AxiosInterceptor };

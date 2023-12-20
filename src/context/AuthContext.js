@@ -15,6 +15,7 @@ export const AuthProvider = ({children}) => {
   const [accessToken, setAccessToken] = useState(null);
   const [refreshToken, setRefreshToken] = useState(null);
 
+  let refreshSubscribers = [];
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,25 +30,13 @@ export const AuthProvider = ({children}) => {
 
   useEffect( ()=> {
     if( userLogout ) {
-      //logOutCurrentUser();
       setUserLogout(true);
     }
   }, [userLogout]);
 
-  const handleTokenExpiration = () => {
-    console.log("----handleTokenExpiration---")
-    setSuccessAuth(false);
-    setAccessToken(null);
-    setUser(null);
-
-    localStorage.removeItem('user');
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    navigate('/login');
-  };
 
   /** SignIn */
-  const signInCurrentUser = async (credentials) => {
+  const signInUser = async (credentials) => {
     try {
       const result = await UsersService.signup(credentials);
       setSuccessAuth(true);
@@ -58,7 +47,7 @@ export const AuthProvider = ({children}) => {
   }
 
   /** LogIn */
-  const loginCurrentUser = async (credentials) => {
+  const logInUser = async (credentials) => {
     try {
       const result = await AuthService.login(credentials);
       
@@ -87,11 +76,10 @@ export const AuthProvider = ({children}) => {
   };
 
   /** LogOut */
-  const logOutCurrentUser = async (email) => {
+  const logOutUser = async (email) => {
     try {
-      const result = await AuthService.logout(email);
+      await AuthService.logout(email);
 
-      //setUserLogout(true);
       setSuccessAuth(false);
       setAccessToken(null);
       setUser(null);
@@ -99,45 +87,37 @@ export const AuthProvider = ({children}) => {
       localStorage.removeItem('user');
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
-      navigate('/');
+      navigate('/#/login');
 
     } catch (error) {
-      //setSuccessAuth(true);
       console.error("ERROR: Error during logout:", error.message);
     }
   }
 
   /** Refresh Token */
-  const refreshTokens = async () => {
-    try {
-      const newTokens = await AuthService.refresh(refreshToken);
-      //localStorage.setItem("accessToken", JSON.stringify(newTokens));
-      localStorage.setItem("accessToken", newTokens.accessToken);
-      localStorage.setItem("refreshToken", newTokens.refreshToken);
-
-      setAccessToken(newTokens);
-
-      const decodedUser = jwtDecode(newTokens.accessToken);
-      setUser(decodedUser);
-
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        console.log("Unauthorized access. Redirecting to login...");
-        handleTokenExpiration();
-      } else {
-        console.error("ERROR: Error during refreshing tokens:", error.message);
-      }
-    }
-  };
+  // const refreshTokens = async () => {
+  //   try {
+  //     const token = localStorage.getItem("refreshToken");
+  //     const response = await axiosInstance.post('/auth/refresh', { refreshToken: token });
+  //     const { refreshToken, accessToken } = response.data;
+  
+  //     localStorage.setItem('accessToken', accessToken);
+  //     localStorage.setItem('refreshToken', refreshToken);
+  
+  //     refreshSubscribers.forEach((callback) => callback(accessToken));
+  //     refreshSubscribers = [];
+  //   } catch (error) {
+  //     console.error('Failed to refresh token:', error);
+  //   }
+  // };
 
   const contextData = {
     user,
-    accessToken,
+    //refreshToken,
     successAuth,
-    refreshTokens,
-    signInCurrentUser,
-    loginCurrentUser,
-    logOutCurrentUser
+    signInUser,
+    logInUser,
+    logOutUser
   }
 
   return (

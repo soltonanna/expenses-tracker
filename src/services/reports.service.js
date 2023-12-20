@@ -1,4 +1,4 @@
-import axiosInstance from '../utils/http-client.util';
+import {axiosInstance} from '../utils/http-client.util';
 
 class ReportsService {
 

@@ -68,7 +68,7 @@ const Login = () => {
   const eye = <FontAwesomeIcon icon = { passwordVisibility ? faEyeSlash : faEye } />;
 
   /** Use Context data */
-  const { loginCurrentUser } = useContext(AuthContext);
+  const { logInUser } = useContext(AuthContext);
   
   /** States of form content */
   const submitHandler = (e) => {
@@ -79,7 +79,7 @@ const Login = () => {
       return;
     }
 
-    loginCurrentUser(credentials);
+    logInUser(credentials);
   }
 
   return (

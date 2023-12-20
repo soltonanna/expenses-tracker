@@ -84,7 +84,7 @@ const SignUp = () => {
   }, [credentials.email, credentials.firstName, credentials.lastName, credentials.password]);
 
   /** Use Context data */
-  const {signInCurrentUser, successAuth, user } = useContext(AuthContext);
+  const { signInUser, successAuth, user } = useContext(AuthContext);
 
   /** States of form content */
   const submitHandler = (e) => {
@@ -95,7 +95,7 @@ const SignUp = () => {
       return;
     }
     
-    signInCurrentUser(credentials);
+    signInUser(credentials);
   }
 
 

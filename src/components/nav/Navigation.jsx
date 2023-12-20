@@ -3,11 +3,11 @@ import { NavLink } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 
 const Navigation = () => {
-    let { user, logOutCurrentUser } = useContext(AuthContext);
+    let { user, logOutUser } = useContext(AuthContext);
 
     const logoutHandler = (e) => {
         e.preventDefault();
-        logOutCurrentUser(user.email);
+        logOutUser(user.email);
     }
 
     return (
