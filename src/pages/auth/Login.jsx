@@ -68,7 +68,7 @@ const Login = () => {
   const eye = <FontAwesomeIcon icon = { passwordVisibility ? faEyeSlash : faEye } />;
 
   /** Use Context data */
-  const { loginCurrentUser, success } = useContext(AuthContext);
+  const { loginCurrentUser } = useContext(AuthContext);
   
   /** States of form content */
   const submitHandler = (e) => {
@@ -90,77 +90,65 @@ const Login = () => {
       </div>
 
       <>
-      {
-        success ? (
-          <div className='login-page__success'>
-            <h2>Congratulations! 🎉</h2>
-            <p>Welcome back <b>{credentials.username}</b>!</p>
-            <p>You have successfully logged in to your account. Now you can explore and manage your <Link to='/profile'> profile </Link></p>
-            <p>Thank you for choosing 'Expenses Tracker' app!</p>
-          </div>
-        ) : (
-          <div className='login-page__form'>
-                  <h2>Login</h2>
-                  <p>Sign in to your account to continue.</p>
+        <div className='login-page__form'>
+                <h2>Login</h2>
+                <p>Sign in to your account to continue.</p>
 
-                  <p ref={errRef} className={ errMsg ? 'error-message' : 'offscreen'} aria-live='assertive'> 
-                    { errMsg } 
-                  </p>
-                  
-                  <Form onSubmit = { submitHandler }>
-                    <ItemBlock
-                      type='email'
-                      ref={userRef}
-                      autoComplete='off'
-                      onChange = { e => setCredentials({...credentials, username: e.target.value}) }
-                      value= { credentials.username }
-                      placeholder='* E-Mail'
-                      name='username'
-                      required
-                      className='row' 
-                      aria-invalid= { validName ? 'false' : 'true' }
-                      aria-describedby='uidnote'
-                      onFocus={() => setUserFocus(true)}
-                      onBlur={() => setUserFocus(false)}
+                <p ref={errRef} className={ errMsg ? 'error-message' : 'offscreen'} aria-live='assertive'> 
+                  { errMsg } 
+                </p>
+                
+                <Form onSubmit = { submitHandler }>
+                  <ItemBlock
+                    type='email'
+                    ref={userRef}
+                    autoComplete='off'
+                    onChange = { e => setCredentials({...credentials, username: e.target.value}) }
+                    value= { credentials.username }
+                    placeholder='* E-Mail'
+                    name='username'
+                    required
+                    className='row' 
+                    aria-invalid= { validName ? 'false' : 'true' }
+                    aria-describedby='uidnote'
+                    onFocus={() => setUserFocus(true)}
+                    onBlur={() => setUserFocus(false)}
 
-                      iconContent={<FontAwesomeIcon icon={faInfoCircle} />}
-                      iconClassName={userFocus && credentials.username && !validName ? 'instructions' : 'offscreen'}
-                      errorMessage={EMAIL_ERROR_MESSAGE}
-                      errorId='uidnote'
-                    />
+                    iconContent={<FontAwesomeIcon icon={faInfoCircle} />}
+                    iconClassName={userFocus && credentials.username && !validName ? 'instructions' : 'offscreen'}
+                    errorMessage={EMAIL_ERROR_MESSAGE}
+                    errorId='uidnote'
+                  />
 
-                    <ItemBlock 
-                      type = { passwordVisibility ? 'text' : 'password' }
-                      onChange = { e => setCredentials({...credentials, password: e.target.value}) }
-                      value = { credentials.password }
-                      placeholder = '* Password'
-                      name = 'password'
-                      required
-                      className = 'row'
-                      aria-invalid= { validPwd ? 'false' : 'true' }
-                      aria-describedby='pwdnote'
-                      onFocus={ () => setPwdFocus(true) }
-                      onBlur={ () => setPwdFocus(false) }
-                      onIconClick = { togglePasswordVisibility }
-                      icon = { eye }
-                      
-                      iconContent={<FontAwesomeIcon icon={faInfoCircle} />}
-                      iconClassName={ pwdFocus && !validPwd ? 'instructions' : 'offscreen' }
-                      errorMessage={PWD_ERROR_MESSAGE}
-                      errorId='pwdnote'
-                    />
+                  <ItemBlock 
+                    type = { passwordVisibility ? 'text' : 'password' }
+                    onChange = { e => setCredentials({...credentials, password: e.target.value}) }
+                    value = { credentials.password }
+                    placeholder = '* Password'
+                    name = 'password'
+                    required
+                    className = 'row'
+                    aria-invalid= { validPwd ? 'false' : 'true' }
+                    aria-describedby='pwdnote'
+                    onFocus={ () => setPwdFocus(true) }
+                    onBlur={ () => setPwdFocus(false) }
+                    onIconClick = { togglePasswordVisibility }
+                    icon = { eye }
+                    
+                    iconContent={<FontAwesomeIcon icon={faInfoCircle} />}
+                    iconClassName={ pwdFocus && !validPwd ? 'instructions' : 'offscreen' }
+                    errorMessage={PWD_ERROR_MESSAGE}
+                    errorId='pwdnote'
+                  />
 
-                    <div>
-                      <Link to='/forgot-password'> Forgot your password? </Link>
-                      <p>Not registered? <Link to='/signup'> Create account </Link></p>
-                    </div>
+                  <div>
+                    <Link to='/forgot-password'> Forgot your password? </Link>
+                    <p>Not registered? <Link to='/signup'> Create account </Link></p>
+                  </div>
 
-                    <Button type='submit' disabled={ !validName || !validPwd ? true : false }>Login</Button>
-                  </Form>
-          </div>
-        )
-      }
-      
+                  <Button type='submit' disabled={ !validName || !validPwd ? true : false }>Login</Button>
+                </Form>
+        </div>
       </>
     </Container>
   )

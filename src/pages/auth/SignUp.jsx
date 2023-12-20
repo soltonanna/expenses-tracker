@@ -84,7 +84,7 @@ const SignUp = () => {
   }, [credentials.email, credentials.firstName, credentials.lastName, credentials.password]);
 
   /** Use Context data */
-  const {signInCurrentUser, success, user } = useContext(AuthContext);
+  const {signInCurrentUser, successAuth, user } = useContext(AuthContext);
 
   /** States of form content */
   const submitHandler = (e) => {
@@ -107,7 +107,7 @@ const SignUp = () => {
 
       <>
       {
-        success ? (
+        successAuth ? (
           <div className='signup-page__success'>
             <h2>Congratulations ! 🎉</h2>
             <p>You've successfully created an account with "Expenses Tracker App"! </p>

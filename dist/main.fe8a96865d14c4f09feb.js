@@ -4871,88 +4871,119 @@ const AuthProvider = _ref => {
   let {
     children
   } = _ref;
-  const [success, setSuccess] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [successAuth, setSuccessAuth] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [userLogout, setUserLogout] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  const [authTokens, setAuthTokens] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [accessToken, setAccessToken] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [refreshToken, setRefreshToken] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    // Check if there are tokens in local storage when the component mounts
-    const tokens = JSON.parse(localStorage.getItem("authTokens"));
-    if (tokens) {
-      setAuthTokens(tokens);
-      const decodedUser = (0,jwt_decode__WEBPACK_IMPORTED_MODULE_3__.jwtDecode)(tokens.accessToken);
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      setAccessToken(accessToken);
+      const decodedUser = (0,jwt_decode__WEBPACK_IMPORTED_MODULE_3__.jwtDecode)(accessToken);
       setUser(decodedUser);
     }
   }, []);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (userLogout) {
-      logOutCurrentUser();
+      //logOutCurrentUser();
+      setUserLogout(true);
     }
-  }, []);
+  }, [userLogout]);
+  const handleTokenExpiration = () => {
+    console.log("----handleTokenExpiration---");
+    setSuccessAuth(false);
+    setAccessToken(null);
+    setUser(null);
+    localStorage.removeItem('user');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    navigate('/login');
+  };
+
+  /** SignIn */
   const signInCurrentUser = async credentials => {
     try {
       const result = await _services_users_service__WEBPACK_IMPORTED_MODULE_2__["default"].signup(credentials);
-      console.log("Signup result:", result);
-
-      // Use 'success' for show some data
-      setSuccess(true);
+      setSuccessAuth(true);
     } catch (error) {
-      console.error("Error during sign up:", error.message);
+      console.error("ERROR: Error during sign up:", error.message);
     }
   };
+
+  /** LogIn */
   const loginCurrentUser = async credentials => {
     try {
-      // Call the login method from AuthService
       const result = await _services_auth_service__WEBPACK_IMPORTED_MODULE_1__["default"].login(credentials);
-      console.log("login result = ", result);
-
-      // Save tokens to local storage
-      localStorage.setItem("authTokens", JSON.stringify(result));
-
-      // Set the state with the decoded user and tokens
-      const decodedUser = (0,jwt_decode__WEBPACK_IMPORTED_MODULE_3__.jwtDecode)(result.accessToken);
+      const {
+        accessToken,
+        refreshToken
+      } = result;
+      localStorage.setItem("user", result.user.email);
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+      setAccessToken(accessToken);
+      setRefreshToken(refreshToken);
+      const decodedUser = (0,jwt_decode__WEBPACK_IMPORTED_MODULE_3__.jwtDecode)(accessToken);
       setUser(decodedUser);
-      setAuthTokens(result);
-
-      // Use 'success' for show some data
-      setSuccess(true);
-
-      // Redirect or perform any other actions upon successful login
-      // navigate('/profile');
+      setSuccessAuth(true);
+      navigate('/profile');
     } catch (error) {
-      setSuccess(false);
-      console.error("Error during login:", error.message);
+      if (error.response && error.response.status === 401) {
+        await refreshTokens();
+      } else {
+        console.error("ERROR: Error during login:", error.message);
+      }
     }
   };
+
+  /** LogOut */
   const logOutCurrentUser = async email => {
     try {
-      // Call the logout method from AuthService
       const result = await _services_auth_service__WEBPACK_IMPORTED_MODULE_1__["default"].logout(email);
 
-      // Reset the user data and tokens
-      setUserLogout(true);
-      setAuthTokens(null);
+      //setUserLogout(true);
+      setSuccessAuth(false);
+      setAccessToken(null);
       setUser(null);
-
-      // Remove tokens from local storage
-      localStorage.removeItem('authTokens');
-      setSuccess(false);
-
-      // Redirect or perform any other actions upon successful logout
+      localStorage.removeItem('user');
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
       navigate('/');
     } catch (error) {
-      setSuccess(true);
-      console.error("Error during logout:", error.message);
+      //setSuccessAuth(true);
+      console.error("ERROR: Error during logout:", error.message);
+    }
+  };
+
+  /** Refresh Token */
+  const refreshTokens = async () => {
+    try {
+      const newTokens = await _services_auth_service__WEBPACK_IMPORTED_MODULE_1__["default"].refresh(refreshToken);
+      //localStorage.setItem("accessToken", JSON.stringify(newTokens));
+      localStorage.setItem("accessToken", newTokens.accessToken);
+      localStorage.setItem("refreshToken", newTokens.refreshToken);
+      setAccessToken(newTokens);
+      const decodedUser = (0,jwt_decode__WEBPACK_IMPORTED_MODULE_3__.jwtDecode)(newTokens.accessToken);
+      setUser(decodedUser);
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        console.log("Unauthorized access. Redirecting to login...");
+        handleTokenExpiration();
+      } else {
+        console.error("ERROR: Error during refreshing tokens:", error.message);
+      }
     }
   };
   const contextData = {
-    success: success,
-    user: user,
-    authTokens: authTokens,
-    signInCurrentUser: signInCurrentUser,
-    loginCurrentUser: loginCurrentUser,
-    logOutCurrentUser: logOutCurrentUser
+    user,
+    accessToken,
+    successAuth,
+    refreshTokens,
+    signInCurrentUser,
+    loginCurrentUser,
+    logOutCurrentUser
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(AuthContext.Provider, {
     value: contextData
@@ -4983,9 +5014,6 @@ const PrivateRoute = () => {
   let {
     user
   } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_context_AuthContext__WEBPACK_IMPORTED_MODULE_1__["default"]);
-
-  // If authorized, return an outlet that will render child elements
-  // If not, return element that will navigate to login page
   return user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Outlet, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Navigate, {
     to: "/login"
   });
@@ -5105,6 +5133,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _utils_media_files__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/media-files */ "./src/utils/media-files.js");
 
+// TODO Arthur. move from utils folder
+
 const HomepageContentInfo = [{
   id: 'homepage',
   title: 'Welcome to Expenses Tracker',
@@ -5137,13 +5167,46 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
+/* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/auth.service */ "./src/services/auth.service.js");
+
 
 const baseURL = 'http://localhost:8000/api/v1';
 const timeout = 5000;
-const axiosInstance = axios__WEBPACK_IMPORTED_MODULE_0__["default"].create({
+const axiosInstance = axios__WEBPACK_IMPORTED_MODULE_1__["default"].create({
   baseURL,
   timeout
+});
+axiosInstance.interceptors.request.use(config => {
+  const token = localStorage.getItem('accessToken');
+  if (token) {
+    config.headers['Authorization'] = `Bearer ${token}`;
+  }
+  return config;
+}, error => {
+  return Promise.reject(error);
+});
+axiosInstance.interceptors.response.use(response => response, async error => {
+  const originalRequest = error.config;
+  if (error.response && error.response.status === 401 && !originalRequest._retry) {
+    console.log('ERROR: Unauthorized access. Refreshing token...');
+    originalRequest._retry = true;
+    try {
+      const newTokens = await _services_auth_service__WEBPACK_IMPORTED_MODULE_0__["default"].refresh(localStorage.getItem('refreshToken'));
+      localStorage.setItem('accessToken', newTokens.accessToken);
+      localStorage.setItem('refreshToken', newTokens.refreshToken);
+      //const originalRequest = error.config;
+      //originalRequest.headers['Authorization'] = `Bearer ${newTokens.accessToken}`;
+
+      return (0,axios__WEBPACK_IMPORTED_MODULE_1__["default"])(originalRequest);
+    } catch (refreshError) {
+      console.log('ERROR: Error refreshing token:', refreshError.message);
+      // TODO: fix the logout functionality
+      await _services_auth_service__WEBPACK_IMPORTED_MODULE_0__["default"].logout(localStorage.getItem('user'));
+      return Promise.reject(refreshError);
+    }
+  }
+  return Promise.reject(error);
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (axiosInstance);
 
@@ -5166,6 +5229,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_Auth_bg_jpg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../images/Auth_bg.jpg */ "./src/images/Auth_bg.jpg");
 /* harmony import */ var _images_Auth2_bg_jpg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../images/Auth2_bg.jpg */ "./src/images/Auth2_bg.jpg");
 /** Homepage */
+
+// TODO Arthur move from utils folder
 
 
 
@@ -5518,10 +5583,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_Container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Container */ "./src/components/Container.jsx");
+/* harmony import */ var _services_users_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/users.service */ "./src/services/users.service.js");
+/* harmony import */ var _context_AuthContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../context/AuthContext */ "./src/context/AuthContext.js");
+
+
 
 
 const Profile = () => {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_Container__WEBPACK_IMPORTED_MODULE_1__["default"], null, "Profile");
+  const [profileData, setProfileData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const {
+    user
+  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_context_AuthContext__WEBPACK_IMPORTED_MODULE_3__["default"]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    const fetchProfileData = async () => {
+      try {
+        const data = await _services_users_service__WEBPACK_IMPORTED_MODULE_2__["default"].me();
+        setProfileData(data);
+      } catch (error) {
+        console.log('Error fetching profile data', error.message);
+      }
+    };
+    fetchProfileData();
+  }, []);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_Container__WEBPACK_IMPORTED_MODULE_1__["default"], null, profileData && user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Hello "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Email: ", profileData.email)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Loading profile data..."));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Profile);
 
@@ -5636,8 +5720,7 @@ const Login = () => {
 
   /** Use Context data */
   const {
-    loginCurrentUser,
-    success
+    loginCurrentUser
   } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_context_AuthContext__WEBPACK_IMPORTED_MODULE_8__["default"]);
 
   /** States of form content */
@@ -5656,11 +5739,7 @@ const Login = () => {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: _utils_media_files__WEBPACK_IMPORTED_MODULE_2__.LoginPageBg,
     alt: "Login Page"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, success ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "login-page__success"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Congratulations! \uD83C\uDF89"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Welcome back ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("b", null, credentials.username), "!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "You have successfully logged in to your account. Now you can explore and manage your ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
-    to: "/profile"
-  }, " profile ")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Thank you for choosing 'Expenses Tracker' app!")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "login-page__form"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Login"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Sign in to your account to continue."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     ref: errRef,
@@ -5828,7 +5907,7 @@ const SignUp = () => {
   /** Use Context data */
   const {
     signInCurrentUser,
-    success,
+    successAuth,
     user
   } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_context_AuthContext__WEBPACK_IMPORTED_MODULE_9__["default"]);
 
@@ -5848,7 +5927,7 @@ const SignUp = () => {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: _utils_media_files__WEBPACK_IMPORTED_MODULE_2__.SignUpPageBg,
     alt: "Signup Page"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, success ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, successAuth ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "signup-page__success"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Congratulations ! \uD83C\uDF89"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "You've successfully created an account with \"Expenses Tracker App\"! "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Feel free to explore your profile, customize your settings, and get started on your \"Expenses Tracker App\" adventure."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Lets go", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Link, {
     to: "/login"
@@ -73280,4 +73359,4 @@ root.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createEle
 
 /******/ })()
 ;
-//# sourceMappingURL=main.380ab07c54f21a78bd29.js.map
+//# sourceMappingURL=main.fe8a96865d14c4f09feb.js.map

@@ -38,3 +38,9 @@ async function main() {
 }
 
 main()
+
+/*
+{
+"user":{"userId":"657f1b8e80c9b9fc13c9dd36",email":"anahi@gmail.com"},"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTdmMWI4ZTgwYzliOWZjMTNjOWRkMzYiLCJlbWFpbCI6ImFuYWhpQGdtYWlsLmNvbSIsImlhdCI6MTcwMjg5NDEwMywiZXhwIjoxNzAyODk3NzAzfQ.M9PHzgVr_4MakwnJjE0J6BPSZpY0bmLmPvC43gnl4y8","refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTdmMWI4ZTgwYzliOWZjMTNjOWRkMzYiLCJlbWFpbCI6ImFuYWhpQGdtYWlsLmNvbSIsImlhdCI6MTcwMjg5NDEwMywiZXhwIjoxNzAyOTMwMTAzfQ.ooJgMHRRcVLTpUG1s46aEGBT32_40G6dZskRtt5D2Go"
+}
+*/

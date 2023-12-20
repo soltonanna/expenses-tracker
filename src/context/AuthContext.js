@@ -8,106 +8,141 @@ const AuthContext = createContext();
 export default AuthContext;
 
 export const AuthProvider = ({children}) => {
-    const [success, setSuccess] = useState(false);
-    const [user, setUser] = useState(null);
-    const [userLogout, setUserLogout] = useState(false);
-    const [authTokens, setAuthTokens] = useState(null);
+  const [successAuth, setSuccessAuth] = useState(false);
+  const [userLogout, setUserLogout] = useState(false);
 
-    const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
+  const [refreshToken, setRefreshToken] = useState(null);
 
-    useEffect(() => {
-        // Check if there are tokens in local storage when the component mounts
-        const tokens = JSON.parse(localStorage.getItem("authTokens"));
-        if (tokens) {
-          setAuthTokens(tokens);
-          const decodedUser = jwtDecode(tokens.accessToken);
-          setUser(decodedUser);
-        }
-    }, []);
+  const navigate = useNavigate();
 
-    useEffect( ()=> {
-      if( userLogout ) {
-        logOutCurrentUser();
-      }
-    }, []);
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      setAccessToken(accessToken);
 
-    const signInCurrentUser = async (credentials) => {
-      try {
-        const result = await UsersService.signup(credentials);
-        console.log("Signup result:", result);
-
-        // Use 'success' for show some data
-        setSuccess(true);
-
-      } catch (error) {
-        console.error("Error during sign up:", error.message);
-      }
+      const decodedUser = jwtDecode(accessToken);
+      setUser(decodedUser);
     }
+  }, []);
 
-    const loginCurrentUser = async (credentials) => {
-        try {
-          // Call the login method from AuthService
-          const result = await AuthService.login(credentials);
+  useEffect( ()=> {
+    if( userLogout ) {
+      //logOutCurrentUser();
+      setUserLogout(true);
+    }
+  }, [userLogout]);
 
-          console.log("login result = ", result);
-    
-          // Save tokens to local storage
-          localStorage.setItem("authTokens", JSON.stringify(result));
-    
-          // Set the state with the decoded user and tokens
-          const decodedUser = jwtDecode(result.accessToken);
-          setUser(decodedUser);
-          setAuthTokens(result);
+  const handleTokenExpiration = () => {
+    console.log("----handleTokenExpiration---")
+    setSuccessAuth(false);
+    setAccessToken(null);
+    setUser(null);
 
-          // Use 'success' for show some data
-          setSuccess(true);
+    localStorage.removeItem('user');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    navigate('/login');
+  };
 
-          // Redirect or perform any other actions upon successful login
-          // navigate('/profile');
-    
-        } catch (error) {
-          setSuccess(false);
-          console.error("Error during login:", error.message);
-        }
-    };
+  /** SignIn */
+  const signInCurrentUser = async (credentials) => {
+    try {
+      const result = await UsersService.signup(credentials);
+      setSuccessAuth(true);
 
-    const logOutCurrentUser = async (email) => {
-      try {
-        // Call the logout method from AuthService
-        const result = await AuthService.logout(email);
+    } catch (error) {
+      console.error("ERROR: Error during sign up:", error.message);
+    }
+  }
 
-        // Reset the user data and tokens
-        setUserLogout(true);
-        setAuthTokens(null);
-        setUser(null);
+  /** LogIn */
+  const loginCurrentUser = async (credentials) => {
+    try {
+      const result = await AuthService.login(credentials);
+      
+      const { accessToken, refreshToken } = result;
 
-        // Remove tokens from local storage
-        localStorage.removeItem('authTokens');
+      localStorage.setItem("user", result.user.email);
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+      
+      setAccessToken(accessToken);
+      setRefreshToken(refreshToken)
 
-        setSuccess(false);
+      const decodedUser = jwtDecode(accessToken);
+      setUser(decodedUser);
 
-        // Redirect or perform any other actions upon successful logout
-        navigate('/');
-  
-      } catch (error) {
-        setSuccess(true);
-        console.error("Error during logout:", error.message);
+      setSuccessAuth(true);
+      navigate('/profile');
+
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        await refreshTokens();
+      } else {
+        console.error("ERROR: Error during login:", error.message);
       }
     }
+  };
 
+  /** LogOut */
+  const logOutCurrentUser = async (email) => {
+    try {
+      const result = await AuthService.logout(email);
 
-    const contextData = {
-        success: success, 
-        user: user,
-        authTokens:authTokens,
-        signInCurrentUser: signInCurrentUser,
-        loginCurrentUser: loginCurrentUser,
-        logOutCurrentUser: logOutCurrentUser,
+      //setUserLogout(true);
+      setSuccessAuth(false);
+      setAccessToken(null);
+      setUser(null);
+
+      localStorage.removeItem('user');
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      navigate('/');
+
+    } catch (error) {
+      //setSuccessAuth(true);
+      console.error("ERROR: Error during logout:", error.message);
     }
+  }
 
-    return (
-        <AuthContext.Provider value = { contextData }>  
-           { children }
-        </AuthContext.Provider>
-    )
+  /** Refresh Token */
+  const refreshTokens = async () => {
+    try {
+      const newTokens = await AuthService.refresh(refreshToken);
+      //localStorage.setItem("accessToken", JSON.stringify(newTokens));
+      localStorage.setItem("accessToken", newTokens.accessToken);
+      localStorage.setItem("refreshToken", newTokens.refreshToken);
+
+      setAccessToken(newTokens);
+
+      const decodedUser = jwtDecode(newTokens.accessToken);
+      setUser(decodedUser);
+
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        console.log("Unauthorized access. Redirecting to login...");
+        handleTokenExpiration();
+      } else {
+        console.error("ERROR: Error during refreshing tokens:", error.message);
+      }
+    }
+  };
+
+  const contextData = {
+    user,
+    accessToken,
+    successAuth,
+    refreshTokens,
+    signInCurrentUser,
+    loginCurrentUser,
+    logOutCurrentUser
+  }
+
+  return (
+    <AuthContext.Provider value = { contextData }>  
+      { children }
+    </AuthContext.Provider>
+  )
 }

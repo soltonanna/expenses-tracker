@@ -2,6 +2,7 @@ import {
     HomepageBg,
     AuthPageBg
 } from '../utils/media-files';
+// TODO Arthur. move from utils folder
 
 export const HomepageContentInfo = [
     {
