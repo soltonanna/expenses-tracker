@@ -66,12 +66,8 @@ export const AuthProvider = ({children}) => {
       setSuccessAuth(true);
       navigate('/profile');
 
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        await refreshTokens();
-      } else {
-        console.error("ERROR: Error during login:", error.message);
-      }
+    } catch (error) { 
+      console.error("ERROR: Error during login:", error.message);
     }
   };
 
@@ -87,33 +83,15 @@ export const AuthProvider = ({children}) => {
       localStorage.removeItem('user');
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
-      navigate('/#/login');
+      navigate('/login');
 
     } catch (error) {
       console.error("ERROR: Error during logout:", error.message);
     }
   }
 
-  /** Refresh Token */
-  // const refreshTokens = async () => {
-  //   try {
-  //     const token = localStorage.getItem("refreshToken");
-  //     const response = await axiosInstance.post('/auth/refresh', { refreshToken: token });
-  //     const { refreshToken, accessToken } = response.data;
-  
-  //     localStorage.setItem('accessToken', accessToken);
-  //     localStorage.setItem('refreshToken', refreshToken);
-  
-  //     refreshSubscribers.forEach((callback) => callback(accessToken));
-  //     refreshSubscribers = [];
-  //   } catch (error) {
-  //     console.error('Failed to refresh token:', error);
-  //   }
-  // };
-
   const contextData = {
     user,
-    //refreshToken,
     successAuth,
     signInUser,
     logInUser,

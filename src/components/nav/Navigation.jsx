@@ -21,7 +21,7 @@ const Navigation = () => {
                     </NavLink>
                 </li>
 
-                { user &&     
+                { user &&  ( <>
                     <li>
                         <NavLink 
                             to="/profile"
@@ -29,6 +29,14 @@ const Navigation = () => {
                             Profile
                         </NavLink>
                     </li>
+                    <li>
+                        <NavLink 
+                            to="/wallet"
+                            className={ ( isActive ) => { isActive ? 'active' : undefined } }>
+                            My Wallet
+                        </NavLink>
+                    </li>
+                    </>)      
                 }
                 { user ? (
                     <li onClick ={ logoutHandler }> <span>Logout</span></li>

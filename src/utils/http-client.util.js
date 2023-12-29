@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 
 const axiosInstance = axios.create({
@@ -30,7 +29,6 @@ function refreshToken() {
 
 const AxiosInterceptor =  () => {
   const { logOutUser } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   axiosInstance.interceptors.request.use(
     (config) => {
@@ -75,7 +73,6 @@ const AxiosInterceptor =  () => {
         else {
           if (config.url === '/auth/refresh' && isRefreshing) {
             await logOutUser(localStorage.getItem("user"));
-            navigate('/login');
           }
           return new Promise((resolve) => {
             refreshSubscribers.push((newAccessToken) => {
